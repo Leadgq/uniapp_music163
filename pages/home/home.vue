@@ -38,11 +38,19 @@
     mvData.value = data.result ?? [];
   }
 
+  onPullDownRefresh(() => {
+    setTimeout(() => {
+      getPersonalizedData();
+      getNewMV();
+      uni.stopPullDownRefresh();
+    }, 1000)
+  })
+
   const selectItem = (item, type) => {
-    if(type === 'mv'){
-       uni.navigateTo({
-         url:`/pages/mv/mv?id=${item.id}`,
-       })
+    if (type === 'mv') {
+      uni.navigateTo({
+        url: `/pages/mv/mv?id=${item.id}`,
+      })
     }
   }
 </script>
