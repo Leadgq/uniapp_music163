@@ -1,0 +1,44 @@
+<template>
+  <div class="mv-container">
+    <div id="mv"></div>
+  </div>
+</template>
+
+<script setup>
+  import Player from 'xgplayer';
+  import {
+    getMvUrl
+  } from "@/api/api.js"
+  let url = ref('');
+  const props = defineProps();
+  onMounted(async () => {
+    await getUrl();
+    initMvContainer()
+  })
+  const getUrl = async () => {
+    let result = await getMvUrl(props.id);
+    url.value = result.data.url ?? '';
+  }
+  const initMvContainer = () => {
+    let player = new Player({
+      id: 'mv',
+      url: url.value,
+      lang: 'zh-cn',
+      playbackRate: [0.5, 0.75, 1, 2]
+    });
+  }
+</script>
+
+<style lang="scss" scoped>
+  .mv-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    #mv {
+      width: 100% !important;
+      height: 350rpx !important;
+    }
+  }
+</style>
